@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0612">
+<meta name="description" content="GirlChat — chat, connect and make new friends.">
+<title>GirlChat — Chat & Connect</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --bg:#08050d;
+  --card:rgba(24,13,31,.72);
+  --pink:#ff3d9a;
+  --pink2:#ff78bc;
+  --purple:#9b5cff;
+  --text:#fff;
+  --muted:#bdb4c5;
+  --border:rgba(255,100,180,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 75% 18%,rgba(255,45,151,.18),transparent 25%),
+    radial-gradient(circle at 20% 55%,rgba(126,65,255,.13),transparent 30%),
+    var(--bg);
+  overflow-x:hidden;
+}
+a{text-decoration:none;color:inherit}
+.container{width:min(1160px,92%);margin:auto}
+
+/* animated background */
+.bg-heart{position:fixed;pointer-events:none;opacity:.15;font-size:22px;animation:float 7s linear infinite;z-index:0}
+.h1{left:7%;top:25%}.h2{right:8%;top:45%;animation-delay:2s}.h3{left:45%;top:12%;animation-delay:4s}
+@keyframes float{0%{transform:translateY(30px) rotate(-10deg);opacity:0}20%{opacity:.16}80%{opacity:.16}100%{transform:translateY(-110px) rotate(15deg);opacity:0}}
+
+header{
+  position:fixed;top:0;left:0;width:100%;z-index:20;
+  background:rgba(8,5,13,.68);backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:800}
+.logo-icon{
+  width:40px;height:40px;border-radius:13px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  box-shadow:0 0 25px rgba(255,61,154,.45)
+}
+.logo span{color:var(--pink2)}
+nav{display:flex;gap:30px;color:#d9d2df;font-size:14px}
+nav a{transition:.25s}
+nav a:hover{color:#fff;text-shadow:0 0 15px var(--pink)}
+.download-top,.hero-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  border:1px solid rgba(255,126,194,.6);
+  background:linear-gradient(135deg,#ff2f92,#c748ff);
+  color:white;font-weight:700;border-radius:13px;
+  box-shadow:0 0 24px rgba(255,45,146,.28);
+  transition:.25s;cursor:pointer;
+}
+.download-top{padding:12px 18px;font-size:13px}
+.download-top:hover,.hero-btn:hover{transform:translateY(-3px);box-shadow:0 0 35px rgba(255,45,146,.55)}
+.menu{display:none;background:none;border:0;color:#fff;font-size:27px}
+
+.hero{min-height:760px;padding-top:150px;position:relative;z-index:1}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:center}
+.badge{
+  display:inline-flex;padding:9px 14px;border:1px solid var(--border);border-radius:999px;
+  background:rgba(255,54,154,.07);color:#f9d8ea;font-size:13px;
+  box-shadow:0 0 25px rgba(255,61,154,.08)
+}
+h1{font-size:clamp(45px,6vw,75px);line-height:1.02;letter-spacing:-3px;margin:22px 0}
+.gradient{background:linear-gradient(90deg,#fff 10%,#ff4ca5 55%,#c86bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:17px;line-height:1.8;max-width:580px}
+.hero-actions{display:flex;gap:14px;margin:30px 0}
+.hero-btn{padding:15px 23px}
+.secondary{
+  display:inline-flex;align-items:center;gap:9px;padding:15px 21px;border-radius:13px;
+  border:1px solid var(--border);background:rgba(255,255,255,.035);color:#eee;
+  font-weight:600;transition:.25s
+}
+.secondary:hover{background:rgba(255,255,255,.08);transform:translateY(-3px)}
+.stats{display:flex;gap:35px;margin-top:28px}
+.stat b{font-size:24px;color:#ff68b5}.stat small{display:block;color:#958b9e;margin-top:3px}
+
+.visual{position:relative;min-height:530px;display:grid;place-items:center}
+.ring{
+  width:390px;height:390px;border-radius:50%;
+  border:2px solid rgba(255,66,163,.75);
+  box-shadow:0 0 55px rgba(255,44,154,.22),inset 0 0 55px rgba(145,77,255,.12);
+  position:absolute;animation:pulse 3s ease-in-out infinite
+}
+@keyframes pulse{50%{transform:scale(1.04);box-shadow:0 0 80px rgba(255,44,154,.38),inset 0 0 80px rgba(145,77,255,.18)}}
+.person{
+  position:relative;width:285px;height:390px;border-radius:145px 145px 35px 35px;
+  background:linear-gradient(160deg,#3b183b,#ff5da8 55%,#7020a9);
+  box-shadow:0 25px 80px rgba(255,45,154,.35);
+  overflow:hidden;
+}
+.person:before{
+  content:"";position:absolute;width:170px;height:205px;left:58px;top:38px;
+  border-radius:50% 50% 46% 46%;background:linear-gradient(145deg,#321c2b,#d59676 62%,#b66f58);
+  box-shadow:inset 35px 0 0 rgba(30,13,25,.35)
+}
+.person:after{
+  content:"";position:absolute;width:240px;height:150px;left:22px;top:225px;
+  border-radius:50% 50% 0 0;background:#ff78b8;
+}
+.chat-pop{
+  position:absolute;right:0;bottom:80px;padding:16px 18px;width:220px;
+  border:1px solid var(--border);background:rgba(20,10,27,.9);border-radius:17px;
+  box-shadow:0 15px 50px rgba(0,0,0,.4);backdrop-filter:blur(14px);
+  animation:bob 3s ease-in-out infinite
+}
+.chat-pop b{font-size:13px}.chat-pop small{display:block;color:#a9a0af;margin-top:6px}
+.online{color:#63e99a;font-size:11px;margin-top:8px}
+@keyframes bob{50%{transform:translateY(-10px)}}
+.heart{position:absolute;color:#ff65b4;font-size:38px;text-shadow:0 0 25px #ff2f9b;animation:bob 2.6s infinite}
+.a{top:45px;right:35px}.b{bottom:60px;left:20px;animation-delay:1s}.c{top:150px;left:5px;font-size:25px}
+
+section{padding:90px 0;position:relative;z-index:1}
+.section-head{text-align:center;margin-bottom:45px}
+.section-head .mini{color:#ff65b4;font-size:13px;font-weight:700;letter-spacing:1px}
+.section-head h2{font-size:40px;margin:10px 0}
+.section-head p{color:var(--muted);max-width:620px;margin:auto;line-height:1.7}
+
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:17px}
+.card{
+  padding:28px 22px;border:1px solid var(--border);border-radius:22px;
+  background:linear-gradient(145deg,rgba(35,17,43,.75),rgba(16,9,22,.7));
+  transition:.3s;position:relative;overflow:hidden
+}
+.card:before{content:"";position:absolute;inset:-50%;background:radial-gradient(circle,rgba(255,50,155,.08),transparent 35%);opacity:0;transition:.3s}
+.card:hover{transform:translateY(-8px);border-color:rgba(255,96,178,.45);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.card:hover:before{opacity:1}
+.icon{font-size:35px;margin-bottom:20px}.card h3{margin-bottom:10px}.card p{color:#a99eae;font-size:14px;line-height:1.7}
+
+.download-box{
+  border:1px solid rgba(255,80,172,.35);border-radius:30px;padding:45px;
+  background:radial-gradient(circle at 20% 50%,rgba(255,49,151,.18),transparent 35%),rgba(22,10,30,.75);
+  display:grid;grid-template-columns:1fr 1.3fr;align-items:center;gap:30px;overflow:hidden
+}
+.phone{
+  width:210px;height:390px;border:7px solid #18131d;border-radius:34px;margin:auto;
+  background:linear-gradient(160deg,#30112c,#ff3d9a,#4b1c75);
+  box-shadow:0 0 50px rgba(255,53,160,.35);padding:20px 12px;position:relative
+}
+.phone h3{text-align:center;margin:20px 0}.phone .faces{display:flex;gap:7px;justify-content:center;margin-top:35px}
+.face{width:42px;height:42px;border-radius:50%;background:linear-gradient(145deg,#d6a181,#5a2931);border:2px solid #fff4}
+.fake-btn{position:absolute;bottom:25px;left:15px;right:15px;background:#fff;color:#d72a82;border-radius:12px;text-align:center;padding:11px;font-weight:800}
+.download-box h2{font-size:42px;margin:10px 0}.download-box p{color:var(--muted);line-height:1.8;margin-bottom:25px}
+
+footer{border-top:1px solid rgba(255,255,255,.07);padding:45px 0 25px;color:#9f95a7}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
+footer h3{color:#fff;margin-bottom:15px}footer a{display:block;margin:9px 0;font-size:14px}
+.copy{text-align:center;border-top:1px solid rgba(255,255,255,.06);margin-top:35px;padding-top:20px;font-size:12px}
+
+.reveal{opacity:0;transform:translateY(25px);transition:.7s}.reveal.show{opacity:1;transform:none}
+#top{
+  position:fixed;right:20px;bottom:20px;width:45px;height:45px;border-radius:50%;
+  border:1px solid #ff65b4;background:#2a1029;color:#fff;cursor:pointer;z-index:15;
+  box-shadow:0 0 20px rgba(255,50,150,.3)
+}
+
+@media(max-width:850px){
+  nav,.download-top{display:none}.menu{display:block}
+  .hero{padding-top:120px}.hero-grid{grid-template-columns:1fr}.visual{min-height:480px}
+  .features{grid-template-columns:1fr 1fr}.download-box{grid-template-columns:1fr;padding:30px}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){
+  h1{letter-spacing:-2px}.hero p{font-size:15px}.hero-actions{flex-direction:column}
+  .stats{gap:18px}.features{grid-template-columns:1fr}.section-head h2{font-size:31px}
+  .ring{width:310px;height:310px}.person{width:235px;height:330px}.chat-pop{right:-5px;bottom:45px;width:190px}
+  .download-box h2{font-size:32px}.footer-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="bg-heart h1">♡</div><div class="bg-heart h2">♥</div><div class="bg-heart h3">♡</div>
+
+<header>
+  <div class="container nav">
+    <a class="logo" href="#home"><div class="logo-icon">♥</div>Girl<span>Chat</span></a>
+    <nav>
+      <a href="#home">Home</a><a href="#features">Features</a><a href="#about">About</a>
+      <a href="#download">Download</a>
+    </nav>
+    <a class="download-top apk" href="./GirlChat.apk">↓ Download App</a>
+    <button class="menu" onclick="toggleMenu()">☰</button>
+  </div>
+</header>
+
+<main id="home">
+<section class="hero">
+<div class="container hero-grid">
+  <div class="reveal">
+    <div class="badge">♥ Chat • Connect • Make New Friends</div>
+    <h1>Chat, Connect &<br><span class="gradient">Make New Friends</span></h1>
+    <p>Discover a simple place to chat, connect and build new friendships. Designed with a clean experience, privacy in mind and a beautiful modern interface.</p>
+    <div class="hero-actions">
+      <a class="hero-btn apk" href="./GirlChat.apk">↓ Download App Now</a>
+      <a class="secondary" href="#features">Explore Features →</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>Fast</b><small>Easy to use</small></div>
+      <div class="stat"><b>Private</b><small>Privacy focused</small></div>
+      <div class="stat"><b>24/7</b><small>Chat anytime</small></div>
+    </div>
+  </div>
+
+  <div class="visual reveal">
+    <div class="ring"></div><div class="person"></div>
+    <div class="heart a">♥</div><div class="heart b">♡</div><div class="heart c">♥</div>
+    <div class="chat-pop"><b>💬 New message</b><small>Someone is ready to chat...</small><div class="online">● Online now</div></div>
+  </div>
+</div>
+</section>
+
+<section id="features">
+<div class="container">
+  <div class="section-head reveal"><div class="mini">WHY CHOOSE GIRLCHAT?</div><h2>Everything You Need</h2><p>A lightweight and attractive experience built for chatting and making connections.</p></div>
+  <div class="features">
+    <div class="card reveal"><div class="icon">💬</div><h3>Easy Chat</h3><p>Simple interface so you can focus on conversations without unnecessary clutter.</p></div>
+    <div class="card reveal"><div class="icon">🔒</div><h3>Privacy Focused</h3><p>Keep your conversations and personal information protected with sensible privacy features.</p></div>
+    <div class="card reveal"><div class="icon">🛡️</div><h3>Safe Experience</h3><p>Friendly community-focused design with clear safety and reporting options.</p></div>
+    <div class="card reveal"><div class="icon">⚡</div><h3>Quick & Light</h3><p>Designed to feel smooth on mobile devices and load without unnecessary extras.</p></div>
+  </div>
+</div>
+</section>
+
+<section id="about">
+<div class="container">
+  <div class="section-head reveal"><div class="mini">MADE FOR MOBILE</div><h2>Beautiful. Simple. Fast.</h2><p>Get the latest version of the GirlChat Android app directly from this website.</p></div>
+  <div class="download-box reveal" id="download">
+    <div class="phone">
+      <h3>♥ GirlChat</h3>
+      <div class="faces"><div class="face"></div><div class="face"></div><div class="face"></div></div>
+      <div class="fake-btn">Start Chatting</div>
+    </div>
+    <div>
+      <div class="mini">GET THE LATEST APK</div>
+      <h2>Download <span class="gradient">GirlChat</span></h2>
+      <p>Click the button below to download the current Android APK. When you replace the APK on GitHub with a new version using the same filename, this button will automatically point to the latest file.</p>
+      <a class="hero-btn apk" href="./GirlChat.apk">↓ Download Latest APK</a>
+    </div>
+  </div>
+</div>
+</section>
+</main>
+
+<footer>
+<div class="container">
+  <div class="footer-grid">
+    <div><div class="logo">♥ Girl<span>Chat</span></div><p style="margin-top:12px;line-height:1.7">Chat, connect and make new friends.</p></div>
+    <div><h3>Quick Links</h3><a href="#home">Home</a><a href="#features">Features</a><a href="#download">Download</a></div>
+    <div><h3>Support</h3><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
+    <div><h3>App</h3><a class="apk" href="./GirlChat.apk">Download APK</a><a href="#about">About GirlChat</a></div>
+  </div>
+  <div class="copy">© 2026 GirlChat. All rights reserved.</div>
+</div>
+</footer>
+
+<button id="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* APK auto-cache-busting:
+   Keep the APK filename exactly "GirlChat.apk".
+   Replace that file on GitHub whenever you publish a new version.
+*/
+document.querySelectorAll('.apk').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const base='./GirlChat.apk';
+    btn.href=base+'?v='+Date.now();
+  });
+});
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+function toggleMenu(){
+  const nav=document.querySelector('nav');
+  nav.style.display=nav.style.display==='flex'?'none':'flex';
+  nav.style.position='absolute';nav.style.top='76px';nav.style.left='0';nav.style.right='0';
+  nav.style.padding='20px';nav.style.background='rgba(8,5,13,.97)';nav.style.flexDirection='column';
+}
+</script>
+</body>
+</html>
